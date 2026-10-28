@@ -57,6 +57,24 @@ Không commit `.env` hoặc đặt `MONGO_URI` trong Dockerfile. Hãy nhập sec
 Environment Variables của Render. Nếu credential MongoDB đã từng bị công khai,
 cần đổi password user trên MongoDB Atlas và cập nhật lại biến `MONGO_URI`.
 
+### Checklist kiểm tra sau khi deploy
+
+1. Backend trả về `{"status":"ok"}` tại `/health`.
+2. `GET /api/books` trả về HTTP 200.
+3. Frontend được build với `VITE_API_URL` trỏ đến backend Render, không phải
+   `localhost`.
+4. `FRONTEND_URL` của backend khớp origin frontend Render, ví dụ:
+   `https://235221-trantoanphat-frontend.onrender.com`.
+5. MongoDB Atlas đã cho phép kết nối từ Render trong **Network Access**
+   (có thể dùng `0.0.0.0/0` cho bài tập, nhưng nên giới hạn IP trong môi trường
+   production).
+6. Kiểm tra lần lượt thêm, xem chi tiết, tìm kiếm, cập nhật và xóa sách từ
+   giao diện public.
+
+Nếu backend báo `MongoServerError: bad auth`, kiểm tra lại username/password
+và URL-encode ký tự đặc biệt trong password. Nếu báo timeout kết nối, kiểm tra
+MongoDB Atlas Network Access.
+
 ## V. Backend API
 
 | Method | Endpoint | Mô tả |
