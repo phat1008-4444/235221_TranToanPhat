@@ -19,3 +19,32 @@
    ```bash
    git clone [https://github.com/username/235221_TranToanPhat.git](https://github.com/username/235221_TranToanPhat.git)
    cd 235221_TranToanPhat
+   ```
+2. Cấu hình MongoDB Atlas:
+   ```bash
+   cd backend
+   copy .env.example .env
+   ```
+   Điền `MONGO_URI` trong `.env` bằng connection string của MongoDB Atlas.
+3. Cài đặt và chạy backend:
+   ```bash
+   npm install
+   npm start
+   ```
+
+## V. Backend API
+
+| Method | Endpoint | Mô tả |
+|---|---|---|
+| GET | `/health` | Kiểm tra trạng thái backend |
+| GET | `/api/books` | Lấy danh sách sách |
+| GET | `/api/books/:id` | Xem một sách |
+| POST | `/api/books` | Thêm sách mới |
+| PUT | `/api/books/:id` | Cập nhật sách |
+| DELETE | `/api/books/:id` | Xóa sách |
+| GET | `/api/books?search=keyword` | Tìm theo tên sách, tác giả hoặc thể loại |
+
+Body của `POST`/`PUT` là JSON gồm các trường `bookId`, `title`, `author`,
+`category`, `publisher`, `publishYear`, `isbn`, `quantity` và tùy chọn `description`.
+`bookId` phải là duy nhất; dữ liệu không hợp lệ trả về HTTP 400, bản ghi không tồn tại
+trả về HTTP 404 và lỗi trùng `bookId` trả về HTTP 409.
