@@ -8,7 +8,14 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors());
+const allowedOrigins = (process.env.FRONTEND_URL || '')
+    .split(',')
+    .map((origin) => origin.trim())
+    .filter(Boolean);
+
+app.use(cors({
+    origin: allowedOrigins.length > 0 ? allowedOrigins : true
+}));
 app.use(express.json());
 
 app.get('/health', (req, res) => {
@@ -29,12 +36,12 @@ app.use((error, req, res, next) => {
     return res.status(500).json({ message: 'Lỗi máy chủ' });
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = Number(process.env.PORT) || 5000;
 
 if (require.main === module) {
     connectDB()
         .then(() => {
-            app.listen(PORT, () => {
+            app.listen(PORT, '0.0.0.0', () => {
                 console.log(`Server đang chạy trên cổng ${PORT}`);
             });
         })

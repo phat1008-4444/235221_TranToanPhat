@@ -32,6 +32,31 @@
    npm start
    ```
 
+## VI. Triển khai trên Render
+
+Repository đã có [render.yaml](./render.yaml) để tạo backend và frontend từ Docker.
+Có thể chọn **New > Blueprint** trên Render và trỏ tới repository này. Nếu tạo
+backend thủ công, dùng các giá trị sau:
+
+- **Language:** Docker
+- **Root Directory:** `backend`
+- **Dockerfile Path:** `./Dockerfile`
+- **Health Check Path:** `/health`
+- **Environment Variables:**
+  - `PORT=10000` (Render tự cấp port; ứng dụng cũng hỗ trợ port động)
+  - `MONGO_URI=<MongoDB Atlas connection string>`
+  - `MONGO_DB_NAME=235221_TranToanPhat`
+  - `FRONTEND_URL=<URL frontend Render>`
+
+Sau khi backend deploy thành công, kiểm tra:
+`https://<backend-service>.onrender.com/health`.
+Khi tạo frontend, đặt `VITE_API_URL` bằng
+`https://<backend-service>.onrender.com/api` trước khi build image.
+
+Không commit `.env` hoặc đặt `MONGO_URI` trong Dockerfile. Hãy nhập secret ở
+Environment Variables của Render. Nếu credential MongoDB đã từng bị công khai,
+cần đổi password user trên MongoDB Atlas và cập nhật lại biến `MONGO_URI`.
+
 ## V. Backend API
 
 | Method | Endpoint | Mô tả |

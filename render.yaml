@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: 235221-trantoanphat-api
+    runtime: docker
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: MONGO_URI
+        sync: false
+      - key: MONGO_DB_NAME
+        value: 235221_TranToanPhat
+      - key: FRONTEND_URL
+        sync: false
+
+  - type: web
+    name: 235221-trantoanphat-frontend
+    runtime: docker
+    rootDir: frontend
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: VITE_API_URL
+        sync: false
