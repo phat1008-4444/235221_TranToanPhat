@@ -43,7 +43,7 @@ backend thủ công, dùng các giá trị sau:
 - **Dockerfile Path:** `./Dockerfile`
 - **Health Check Path:** `/health`
 - **Environment Variables:**
-  - `PORT=10000` (Render tự cấp port; ứng dụng cũng hỗ trợ port động)
+  - Xóa biến `PORT` để Render tự cấp port, hoặc đặt `PORT=10000`
   - `MONGO_URI=<MongoDB Atlas connection string>`
   - `MONGO_DB_NAME=235221_TranToanPhat`
   - `FRONTEND_URL=<URL frontend Render>`
@@ -75,6 +75,11 @@ cần đổi password user trên MongoDB Atlas và cập nhật lại biến `MO
 Nếu backend báo `MongoServerError: bad auth`, kiểm tra lại username/password
 và URL-encode ký tự đặc biệt trong password. Nếu báo timeout kết nối, kiểm tra
 MongoDB Atlas Network Access.
+
+Nếu frontend báo `Failed to load resource` hoặc `ERR_NETWORK_IO_SUSPENDED`,
+kiểm tra backend trước tại `/health`. Trên Render không đặt `PORT=5000`; hãy
+xóa biến này hoặc dùng `PORT=10000`, rồi redeploy backend. Đồng thời đặt
+`VITE_API_URL` của frontend là `https://<backend-service>.onrender.com/api`.
 
 ## V. Backend API
 
