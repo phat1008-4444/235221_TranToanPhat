@@ -52,6 +52,7 @@ Sau khi backend deploy thành công, kiểm tra:
 `https://<backend-service>.onrender.com/health`.
 Khi tạo frontend, đặt `VITE_API_URL` bằng
 `https://<backend-service>.onrender.com/api` trước khi build image.
+Ứng dụng cũng tự bổ sung hậu tố `/api` nếu biến này chỉ chứa domain backend.
 
 Không commit `.env` hoặc đặt `MONGO_URI` trong Dockerfile. Hãy nhập secret ở
 Environment Variables của Render. Nếu credential MongoDB đã từng bị công khai,
